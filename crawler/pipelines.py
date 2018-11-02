@@ -18,8 +18,8 @@ def json_deep_get(js, key, default):
 
     Examples: 
     json_deep_get({}, [], "hello") = ValueError()
-    json_deep_get({"x": {1: {"z": "jesus"}}}, ['x', 1, 'z'], "hello") = "jesus"
-    json_deep_get({"x": {1: {"z": "jesus"}}}, ['y'], "hello") = "hello"
+    json_deep_get({"x": {1: {"z": "something"}}}, ['x', 1, 'z'], "default") = "something"
+    json_deep_get({"x": {1: {"z": "something"}}}, ['y'], "default") = "default"
     """
 
     if key == []:

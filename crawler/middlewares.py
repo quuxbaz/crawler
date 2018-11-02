@@ -3,7 +3,7 @@ import logging
 import re
 
 class WhiteListMiddleware(object):
-    """Implements a download white list."""
+    """Implements a download whitelist."""
 
     @staticmethod
     def is_content_type_okay(whitelist, content_type):
@@ -13,9 +13,9 @@ class WhiteListMiddleware(object):
         return False
 
     def process_response(self, request, response, spider):
-        """Only allow HTTP response types that that match the given white list
-        of regular expressions. Each spider must define a whitelist
-        iterable containing regular expressions whose content type's
+        """Only allow HTTP response types that match the given regular
+        expressions whitelist. Each spider must define a whitelist
+        iterable containing regular expressions whose content types
         the spider wishes to download.
         """
 
