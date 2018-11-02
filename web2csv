@@ -1,0 +1,52 @@
+#!/bin/bash
+function usage {
+  echo "usage: $0 -u http://somewhere.com -o output.csv [-l logfile.txt] [-h]"
+}
+
+function error {
+  echo "$0: error: $1" >&2; usage; exit 1;
+}
+
+while getopts "ahu:l:o:" option; do
+  case $option in 
+    u)
+      URL="$OPTARG"
+      ;;
+    l)
+      LOG="$OPTARG"
+      ;;
+    o)
+      CSV="$OPTARG"
+      ;;
+    h)
+      usage; exit 0;
+      ;;
+    :)
+      echo "Option -$OPTARG requires an argument" >&2
+      usage; exit 1;
+      ;;
+    \?)
+      echo "Invalid option: -$OPTARG" >&2
+      exit 1
+      ;;
+  esac
+done
+
+test -z "$URL" && error "must specify a URL where crawling starts"
+test -z "$CSV" && error "must specify a CSV file where results are stored"
+
+case "$URL" in 
+  "http://"*|"https://"*)
+    true
+    ;;
+  *)
+    URL="http://$URL"
+    ;;
+esac
+
+CMD="scrapy crawl emails -a start=$URL -s LOG_STDOUT=1 -s LOG_FILE=$LOG -o $CSV -t csv"
+
+#shift $((OPTIND - 1)) # remove as many argument as was consumed
+#echo $@
+
+$CMD
